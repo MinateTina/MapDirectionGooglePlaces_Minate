@@ -9,6 +9,14 @@ import UIKit
 import MapKit
 import LBTATools
 
+extension MainController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "id")
+        annotationView.canShowCallout = true
+        return annotationView
+    }
+}
+
 class MainController: UIViewController {
     
     let mapView = MKMapView()
@@ -20,6 +28,56 @@ class MainController: UIViewController {
         mapView.fillSuperview()
         
         setupRegionForMap()
+        
+        performLocalSearch()
+    }
+    
+    private func performLocalSearch() {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = "apple"
+        request.region = mapView.region
+        
+        let localSearch = MKLocalSearch(request: request)
+        localSearch.start { resp, err in
+            if let err = err {
+                print("Failed local search:", err)
+                return
+            }
+            
+            resp?.mapItems.forEach({ mapItem in
+                print(mapItem.name ?? "")
+                
+                let placemark = mapItem.placemark
+                var addressString = ""
+                if placemark.subThoroughfare != nil {
+                    addressString = placemark.subThoroughfare! + " "
+                }
+                if placemark.thoroughfare != nil {
+                    addressString += placemark.thoroughfare! + ", "
+                }
+                if placemark.postalCode != nil {
+                    addressString += placemark.postalCode! + " "
+                }
+                if placemark.locality != nil {
+                    addressString += placemark.locality! + ", "
+                }
+                if placemark.administrativeArea != nil {
+                    addressString += placemark.administrativeArea! + " "
+                }
+                if placemark.country != nil {
+                    addressString += placemark.country!
+                }
+                print(addressString)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = mapItem.placemark.coordinate
+                annotation.title = mapItem.name
+                self.mapView.addAnnotation(annotation)
+            })
+            
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        }
+        
     }
     
     private func setupRegionForMap() {
