@@ -18,8 +18,6 @@ extension MainController: MKMapViewDelegate {
 }
 
 
-
-
 class MainController: UIViewController {
     
     let mapView = MKMapView()
@@ -37,6 +35,8 @@ class MainController: UIViewController {
         setupSearchdUI()
         
         setupLocationCarousel()
+        
+        locationController.mainController = self
     }
     
     let locationController = LocationCarouselController(scrollDirection: .horizontal)
@@ -63,16 +63,16 @@ class MainController: UIViewController {
         
         whiteContainer.stack(searchTextField).withMargins(.allSides(16))
         
-//        searchTextField.addTarget(self, action: #selector(handleSearchChanges), for: .editingChanged)
+        searchTextField.addTarget(self, action: #selector(handleSearchChanges), for: .editingChanged)
         
         //New School Search Throttling
         //search on the last keystroke of text changes and basically wait 500 milliseconds
-        NotificationCenter.default
-            .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
-            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .sink { _ in
-                self.performLocalSearch()
-            }
+//        NotificationCenter.default
+//            .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
+//            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+//            .sink { _ in
+//                self.performLocalSearch()
+//            }
     }
     
     @objc func handleSearchChanges() {
@@ -92,6 +92,7 @@ class MainController: UIViewController {
             }
             //when it's a success to fetch requests, remove old annotations.
             self.mapView.removeAnnotations(self.mapView.annotations)
+            self.locationController.items.removeAll()
             
             resp?.mapItems.forEach({ mapItem in
                 print(mapItem.address())
@@ -99,7 +100,12 @@ class MainController: UIViewController {
                 annotation.coordinate = mapItem.placemark.coordinate
                 annotation.title = mapItem.name
                 self.mapView.addAnnotation(annotation)
+                
+                //tell my locaionCarouselController
+                self.locationController.items.append(mapItem)
             })
+            //Once search for new items, scroll back to the first index
+            self.locationController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
             
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
