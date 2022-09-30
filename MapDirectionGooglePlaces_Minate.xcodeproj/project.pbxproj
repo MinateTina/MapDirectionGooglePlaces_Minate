@@ -17,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapDirectionGooglePlaces-Minate-Info.plist"; sourceTree = SOURCE_ROOT; };
 		008A35C928DE53EA00C0919B /* MapDirectionGooglePlaces_Minate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapDirectionGooglePlaces_Minate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDirectionGooglePlaces_MinateApp.swift; sourceTree = "<group>"; };
 		008A35CE28DE53EA00C0919B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +58,7 @@
 		008A35CB28DE53EA00C0919B /* MapDirectionGooglePlaces_Minate */ = {
 			isa = PBXGroup;
 			children = (
+				0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */,
 				00DF0BD628DF99F40003C805 /* Main */,
 				008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */,
 				008A35CE28DE53EA00C0919B /* ContentView.swift */,
@@ -294,6 +296,8 @@
 				DEVELOPMENT_TEAM = DGEZE9G3T2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MapDirectionGooglePlaces-Minate-Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -323,6 +327,8 @@
 				DEVELOPMENT_TEAM = DGEZE9G3T2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MapDirectionGooglePlaces-Minate-Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

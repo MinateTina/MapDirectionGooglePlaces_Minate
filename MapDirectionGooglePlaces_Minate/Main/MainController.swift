@@ -11,19 +11,57 @@ import LBTATools
 
 extension MainController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "id")
-        annotationView.canShowCallout = true
-        return annotationView
+        
+        if (annotation is MKPointAnnotation) {
+            let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "id")
+            annotationView.canShowCallout = true
+            return annotationView
+        }
+        
+        return nil
+        
     }
 }
 
 
-class MainController: UIViewController {
+class MainController: UIViewController, CLLocationManagerDelegate {
     
+    let locationManager = CLLocationManager()
     let mapView = MKMapView()
+    
+    
+    private func requestUserLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse:
+            print("Received authorization of user location")
+            locationManager.startUpdatingLocation()
+        default:
+            print("Failed to authorize")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let firstLocation = locations.first else { return }
+        mapView.setRegion(.init(center: firstLocation.coordinate, span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)), animated: false)
+        
+        locationManager.stopUpdatingLocation()
+    }
+    
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        requestUserLocation()
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = true
         
         view.addSubview(mapView)
         mapView.fillSuperview()
@@ -47,7 +85,7 @@ class MainController: UIViewController {
         
         view.addSubview(locationView)
         
-        locationView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 150))
+        locationView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 100))
         
     }
 
@@ -71,12 +109,23 @@ class MainController: UIViewController {
 //            .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
 //            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
 //            .sink { _ in
+//                print("performLocalSearch")
 //                self.performLocalSearch()
 //            }
     }
     
     @objc func handleSearchChanges() {
         performLocalSearch()
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        guard let customAnnotation = view.annotation as? CustomMapItemAnnotation else { return }
+                
+        guard let index = self.locationController.items.firstIndex(where: {$0.name == customAnnotation.mapItem?.name}) else { return }
+        
+        self.locationController.collectionView.scrollToItem(at: [0,index], at: .centeredHorizontally, animated: true)
+        
     }
     
     private func performLocalSearch() {
@@ -96,9 +145,10 @@ class MainController: UIViewController {
             
             resp?.mapItems.forEach({ mapItem in
                 print(mapItem.address())
-                let annotation = MKPointAnnotation()
+                let annotation = CustomMapItemAnnotation()
+                annotation.mapItem = mapItem
                 annotation.coordinate = mapItem.placemark.coordinate
-                annotation.title = mapItem.name
+                annotation.title = "Location: " + (mapItem.name ?? "")
                 self.mapView.addAnnotation(annotation)
                 
                 //tell my locaionCarouselController
@@ -110,6 +160,10 @@ class MainController: UIViewController {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
         
+    }
+    
+    class CustomMapItemAnnotation: MKPointAnnotation {
+        var mapItem: MKMapItem?
     }
     
     private func setupRegionForMap() {

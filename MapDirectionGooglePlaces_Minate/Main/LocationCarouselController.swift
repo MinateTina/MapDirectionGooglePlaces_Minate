@@ -14,7 +14,6 @@ class LocationCell: LBTAListCell<MKMapItem> {
     override var item: MKMapItem! {
         didSet {
             label.text = item.name
-           
             addressLabel.text = item.address()
             
         }
@@ -22,7 +21,7 @@ class LocationCell: LBTAListCell<MKMapItem> {
     
     
     let label = UILabel(text: "Location", font: .boldSystemFont(ofSize: 16))
-    let coordinateLabel = UILabel(text: "Coordinate")
+//    let coordinateLabel = UILabel(text: "Coordinate")
     let addressLabel = UILabel(text: "Address", numberOfLines: 0)
     
     override func setupViews() {
@@ -30,7 +29,7 @@ class LocationCell: LBTAListCell<MKMapItem> {
         setupShadow(opacity: 0.5, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
         clipsToBounds = false
-        stack(label, coordinateLabel, addressLabel).withMargins(.allSides(16))
+        stack(label, addressLabel).withMargins(.allSides(16))
     }
 }
 
@@ -39,11 +38,13 @@ class LocationCarouselController: LBTAListController<LocationCell, MKMapItem> {
     weak var mainController: MainController?
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(self.items[indexPath.item].name)
         
         let annotations = mainController?.mapView.annotations
+        
+        
         annotations?.forEach({ annotation in
-            if annotation.title == self.items[indexPath.item].name {
+            guard let customAnnotation = annotation as? MainController.CustomMapItemAnnotation else { return }
+                    if customAnnotation.mapItem?.name == self.items[indexPath.item].name {
                 mainController?.mapView.selectAnnotation(annotation, animated: true)
             }
         })
