@@ -14,6 +14,7 @@
 		00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B8933328E4F80900FAAA1C /* LocationCarouselController.swift */; };
 		00DF0BD528DF99D20003C805 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 00DF0BD428DF99D20003C805 /* LBTATools */; };
 		00DF0BD828DF9A040003C805 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0BD728DF9A040003C805 /* MainController.swift */; };
+		00E5278728E68F4E0018675A /* DirectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E5278628E68F4E0018675A /* DirectionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		008A35D328DE53EC00C0919B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		00B8933328E4F80900FAAA1C /* LocationCarouselController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCarouselController.swift; sourceTree = "<group>"; };
 		00DF0BD728DF9A040003C805 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		00E5278628E68F4E0018675A /* DirectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0073049928E68EFC00CCAF0F /* Directions */ = {
+			isa = PBXGroup;
+			children = (
+				00E5278628E68F4E0018675A /* DirectionController.swift */,
+			);
+			path = Directions;
+			sourceTree = "<group>";
+		};
 		008A35C028DE53E900C0919B = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +68,7 @@
 		008A35CB28DE53EA00C0919B /* MapDirectionGooglePlaces_Minate */ = {
 			isa = PBXGroup;
 			children = (
+				0073049928E68EFC00CCAF0F /* Directions */,
 				0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */,
 				00DF0BD628DF99F40003C805 /* Main */,
 				008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */,
@@ -162,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */,
+				00E5278728E68F4E0018675A /* DirectionController.swift in Sources */,
 				008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */,
 				00DF0BD828DF9A040003C805 /* MainController.swift in Sources */,
 				008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */,

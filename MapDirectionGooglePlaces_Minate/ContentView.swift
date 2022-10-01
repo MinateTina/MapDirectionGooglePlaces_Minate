@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
+        ContainerView1().edgesIgnoringSafeArea(.all)
     }
 }
 
