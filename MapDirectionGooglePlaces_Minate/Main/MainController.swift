@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import LBTATools
+import Combine
 
 extension MainController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -70,7 +71,7 @@ class MainController: UIViewController, CLLocationManagerDelegate {
         
         performLocalSearch()
         
-        setupSearchdUI()
+        setupSearchUI()
         
         setupLocationCarousel()
         
@@ -91,7 +92,7 @@ class MainController: UIViewController, CLLocationManagerDelegate {
 
     let searchTextField = UITextField(placeholder: "Search Query")
     
-    private func setupSearchdUI() {
+    private func setupSearchUI() {
         
         let whiteContainer = UIView(backgroundColor: .white)
         view.addSubview(whiteContainer)
@@ -101,22 +102,23 @@ class MainController: UIViewController, CLLocationManagerDelegate {
         
         whiteContainer.stack(searchTextField).withMargins(.allSides(16))
         
-        searchTextField.addTarget(self, action: #selector(handleSearchChanges), for: .editingChanged)
-        
-        //New School Search Throttling
-        //search on the last keystroke of text changes and basically wait 500 milliseconds
-//        NotificationCenter.default
-//            .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
-//            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-//            .sink { _ in
-//                print("performLocalSearch")
-//                self.performLocalSearch()
-//            }
+
+        setupSearchListener()
     }
     
-    @objc func handleSearchChanges() {
-        performLocalSearch()
+    var listener: Any!
+    //cancel listener bcos might have retain cycles
+//    var listener: AnyCancellable!
+    private func setupSearchListener() {
+        listener = NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: searchTextField).debounce(for: .milliseconds(500), scheduler: RunLoop.main).sink(receiveValue: { [weak self] _ in
+            self?.performLocalSearch()
+        })
+        
+//        listener.cancel()
     }
+
+    
+
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
@@ -210,20 +212,19 @@ struct MainView: PreviewProvider {
     static var previews: some View {
         ContainerView().edgesIgnoringSafeArea(.all)
     }
-}
-
-struct ContainerView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> MainController {
-        return MainController()
-    }
     
-    func updateUIViewController(_ uiViewController: MainController, context: Context) {
+    struct ContainerView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> MainController {
+            return MainController()
+        }
         
+        func updateUIViewController(_ uiViewController: MainController, context: Context) {
+            
+        }
     }
-    
-    typealias UIViewControllerType = MainController
-
 }
+
+
 
 
 

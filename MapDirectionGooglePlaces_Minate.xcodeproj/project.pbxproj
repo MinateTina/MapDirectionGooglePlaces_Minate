@@ -7,18 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E33A28EBBACC00066598 /* LocationSearchController.swift */; };
 		008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */; };
 		008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CE28DE53EA00C0919B /* ContentView.swift */; };
 		008A35D128DE53EC00C0919B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008A35D028DE53EC00C0919B /* Assets.xcassets */; };
 		008A35D428DE53EC00C0919B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008A35D328DE53EC00C0919B /* Preview Assets.xcassets */; };
+		0091D64128ECF5400088F59F /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 0091D64028ECF5400088F59F /* LBTATools */; };
+		0091D64428ED23080088F59F /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0091D64328ED23080088F59F /* JGProgressHUD */; };
 		00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B8933328E4F80900FAAA1C /* LocationCarouselController.swift */; };
-		00DF0BD528DF99D20003C805 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 00DF0BD428DF99D20003C805 /* LBTATools */; };
 		00DF0BD828DF9A040003C805 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0BD728DF9A040003C805 /* MainController.swift */; };
 		00E5278728E68F4E0018675A /* DirectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E5278628E68F4E0018675A /* DirectionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapDirectionGooglePlaces-Minate-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0086E33A28EBBACC00066598 /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
 		008A35C928DE53EA00C0919B /* MapDirectionGooglePlaces_Minate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapDirectionGooglePlaces_Minate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDirectionGooglePlaces_MinateApp.swift; sourceTree = "<group>"; };
 		008A35CE28DE53EA00C0919B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,7 +37,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00DF0BD528DF99D20003C805 /* LBTATools in Frameworks */,
+				0091D64428ED23080088F59F /* JGProgressHUD in Frameworks */,
+				0091D64128ECF5400088F59F /* LBTATools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				00E5278628E68F4E0018675A /* DirectionController.swift */,
+				0086E33A28EBBACC00066598 /* LocationSearchController.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -113,7 +118,8 @@
 			);
 			name = MapDirectionGooglePlaces_Minate;
 			packageProductDependencies = (
-				00DF0BD428DF99D20003C805 /* LBTATools */,
+				0091D64028ECF5400088F59F /* LBTATools */,
+				0091D64328ED23080088F59F /* JGProgressHUD */,
 			);
 			productName = MapDirectionGooglePlaces_Minate;
 			productReference = 008A35C928DE53EA00C0919B /* MapDirectionGooglePlaces_Minate.app */;
@@ -144,7 +150,8 @@
 			);
 			mainGroup = 008A35C028DE53E900C0919B;
 			packageReferences = (
-				00DF0BD328DF99D20003C805 /* XCRemoteSwiftPackageReference "LBTATools" */,
+				0091D63F28ECF5400088F59F /* XCRemoteSwiftPackageReference "LBTATools" */,
+				0091D64228ED23080088F59F /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 			);
 			productRefGroup = 008A35CA28DE53EA00C0919B /* Products */;
 			projectDirPath = "";
@@ -174,6 +181,7 @@
 			files = (
 				00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */,
 				00E5278728E68F4E0018675A /* DirectionController.swift in Sources */,
+				0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */,
 				008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */,
 				00DF0BD828DF9A040003C805 /* MainController.swift in Sources */,
 				008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */,
@@ -383,21 +391,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		00DF0BD328DF99D20003C805 /* XCRemoteSwiftPackageReference "LBTATools" */ = {
+		0091D63F28ECF5400088F59F /* XCRemoteSwiftPackageReference "LBTATools" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bhlvoong/LBTATools";
 			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		0091D64228ED23080088F59F /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD";
+			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		00DF0BD428DF99D20003C805 /* LBTATools */ = {
+		0091D64028ECF5400088F59F /* LBTATools */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 00DF0BD328DF99D20003C805 /* XCRemoteSwiftPackageReference "LBTATools" */;
+			package = 0091D63F28ECF5400088F59F /* XCRemoteSwiftPackageReference "LBTATools" */;
 			productName = LBTATools;
+		};
+		0091D64328ED23080088F59F /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0091D64228ED23080088F59F /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -9,6 +9,7 @@ import UIKit
 import MapKit
 import LBTATools
 import SwiftUI
+import JGProgressHUD
 
 class DirectionController: UIViewController,MKMapViewDelegate {
     
@@ -24,8 +25,8 @@ class DirectionController: UIViewController,MKMapViewDelegate {
         setupNavBarUI()
         setupMapView()
         mapView.showsUserLocation = true
-        setupStartEndDummyAnnotations()
-        requestForDirections()
+//        setupStartEndDummyAnnotations()
+//        requestForDirections()
     }
     
     let startAnnotation = MKPointAnnotation()
@@ -47,17 +48,25 @@ class DirectionController: UIViewController,MKMapViewDelegate {
     private func requestForDirections() {
         let request = MKDirections.Request()
         
-        let startingPlacemark = MKPlacemark(coordinate: startAnnotation.coordinate)
-        request.source = .init(placemark: startingPlacemark)
-        let endingPlacemark = MKPlacemark(coordinate: endAnnotation.coordinate)
-        request.destination = .init(placemark: endingPlacemark)
+//        let startingPlacemark = MKPlacemark(coordinate: startAnnotation.coordinate)
+        request.source = startMapItem
+        
+        
+//        let endingPlacemark = MKPlacemark(coordinate: endAnnotation.coordinate)
+        request.destination = endMapItem
         
        // request.transportType = .automobile
         
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Routing...."
+        hud.show(in: view)
+        
+        
         let directions = MKDirections(request: request)
         directions.calculate { resp, err in
+            hud.dismiss()
             if let err = err {
-                print("Failed to find routing for:", err)
+                print("Failed to find routing info:", err)
                 return
             }
             //success
@@ -73,7 +82,7 @@ class DirectionController: UIViewController,MKMapViewDelegate {
     //renderer for the overlay on the map
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-        polylineRenderer.strokeColor = #colorLiteral(red: 0.1758151352, green: 0.4966287613, blue: 0.7584065795, alpha: 1)
+        polylineRenderer.strokeColor = #colorLiteral(red: 0.3672358394, green: 0.6400595307, blue: 0.9723293185, alpha: 1)
         polylineRenderer.lineWidth = 3
         return polylineRenderer
     }
@@ -118,19 +127,66 @@ class DirectionController: UIViewController,MKMapViewDelegate {
         
         startTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeStartLocation)))
         
+        endTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeEndLocation)))
+        
         navigationController?.navigationBar.isHidden = true
         
     }
     
+    var startMapItem: MKMapItem?
+    var endMapItem: MKMapItem?
+    
     @objc private func handleChangeStartLocation() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .yellow
+        let vc = LocationSearchController()
+        
+        vc.selectionHandler = { [weak self] mapItem in
+            self?.startTextField.text = mapItem.name
+            
+            self?.startMapItem = mapItem
+            self?.refreshMap()
+            
+        }
         navigationController?.pushViewController(vc, animated: true)
         
     }
     
+    func refreshMap() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+        
+        if let mapItem = startMapItem {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = mapItem.placemark.coordinate
+            annotation.title = mapItem.name
+            mapView.addAnnotation(annotation)
+        }
+        
+        if let mapItem = endMapItem {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = mapItem.placemark.coordinate
+            annotation.title = mapItem.name
+            mapView.addAnnotation(annotation)
+        }
+        
+        requestForDirections()
+        mapView.showAnnotations(mapView.annotations, animated: false)
+    }
+    
+    @objc private func handleChangeEndLocation() {
+        let vc = LocationSearchController()
+        
+        vc.selectionHandler = { [weak self] mapItem in
+            self?.endTextField.text = mapItem.name
+            self?.endMapItem = mapItem
+            self?.refreshMap()
+        }
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+
+    
     private func setupRegionForMap() {
-        let centerCoordinate = CLLocationCoordinate2D(latitude: 37.774, longitude: -122.4313)
+        let centerCoordinate = CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
@@ -142,26 +198,21 @@ class DirectionController: UIViewController,MKMapViewDelegate {
 struct DirectionPreview: PreviewProvider {
     static var previews: some View {
 
-        ContainerView1().edgesIgnoringSafeArea(.all)
-        ContainerView1().edgesIgnoringSafeArea(.all)
-            .environment(\.colorScheme, .dark)
+        ContainerView().edgesIgnoringSafeArea(.all)
+//        ContainerView1().edgesIgnoringSafeArea(.all)
+//            .environment(\.colorScheme, .dark)
         
     }
-}
+    
+    struct ContainerView: UIViewControllerRepresentable {
 
-struct ContainerView1: UIViewControllerRepresentable {
-    
-    let navController = UINavigationController()
-    
-    
-    func makeUIViewController(context: Context) -> DirectionController {
-        return DirectionController()
-    }
-    
-    
-    func updateUIViewController(_ uiViewController: DirectionController, context: Context) {
+        func makeUIViewController(context: UIViewControllerRepresentableContext<DirectionPreview.ContainerView>) -> UIViewController {
+            return UINavigationController(rootViewController: DirectionController())
+        }
         
+        func updateUIViewController(_ uiViewController: DirectionPreview.ContainerView.UIViewControllerType, context: UIViewControllerRepresentableContext<DirectionPreview.ContainerView>) {
+            
+        }
     }
-    
-    typealias UIViewControllerType = DirectionController
+
 }
