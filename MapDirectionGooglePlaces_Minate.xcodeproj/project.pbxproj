@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006367EF28EE4953000B668B /* RouteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006367EE28EE4953000B668B /* RouteHeader.swift */; };
 		0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E33A28EBBACC00066598 /* LocationSearchController.swift */; };
 		008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */; };
 		008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CE28DE53EA00C0919B /* ContentView.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		006367EE28EE4953000B668B /* RouteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHeader.swift; sourceTree = "<group>"; };
 		0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapDirectionGooglePlaces-Minate-Info.plist"; sourceTree = SOURCE_ROOT; };
 		0086E33A28EBBACC00066598 /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
 		008A35C928DE53EA00C0919B /* MapDirectionGooglePlaces_Minate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapDirectionGooglePlaces_Minate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +52,7 @@
 			children = (
 				00E5278628E68F4E0018675A /* DirectionController.swift */,
 				0086E33A28EBBACC00066598 /* LocationSearchController.swift */,
+				006367EE28EE4953000B668B /* RouteHeader.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				006367EF28EE4953000B668B /* RouteHeader.swift in Sources */,
 				00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */,
 				00E5278728E68F4E0018675A /* DirectionController.swift in Sources */,
 				0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */,

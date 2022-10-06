@@ -25,25 +25,25 @@ class DirectionController: UIViewController,MKMapViewDelegate {
         setupNavBarUI()
         setupMapView()
         mapView.showsUserLocation = true
-//        setupStartEndDummyAnnotations()
-//        requestForDirections()
+
+        setupShowRouteButton()
     }
     
-    let startAnnotation = MKPointAnnotation()
-    let endAnnotation = MKPointAnnotation()
-    
-    private func setupStartEndDummyAnnotations() {
+    private func setupShowRouteButton() {
         
-        startAnnotation.coordinate = .init(latitude: 37.7666, longitude: -122.427290)
-        startAnnotation.title = "Start"
-        
-        
-        endAnnotation.coordinate = .init(latitude: 37.331352, longitude: -122.030331)
-        endAnnotation.title = "End"
-        
-        mapView.addAnnotations([startAnnotation, endAnnotation])
-        mapView.showAnnotations(mapView.annotations, animated: true)
+        let showRouteButton = UIButton(title: "Show Route", titleColor: .black, font: .boldSystemFont(ofSize: 16), backgroundColor: .white, target: self, action: #selector(handleShowRoute))
+        view.addSubview(showRouteButton)
+        showRouteButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .allSides(16), size: .init(width: 0, height: 50))
     }
+    
+    @objc private func handleShowRoute() {
+        let routesController = RoutesController()
+        routesController.route = currentShowingRoute
+        routesController.items = self.currentShowingRoute?.steps.filter({ !$0.instructions.isEmpty}) ?? []
+        //filter bcos upper view is blank
+        present(routesController, animated: true)
+    }
+
     
     private func requestForDirections() {
         let request = MKDirections.Request()
@@ -70,19 +70,22 @@ class DirectionController: UIViewController,MKMapViewDelegate {
                 return
             }
             //success
-            print("Found my directions/routing...")
-            //only one route
-//            guard let route = resp?.routes.first else { return }
-            resp?.routes.forEach({ route in
-                print(route.expectedTravelTime)
-                self.mapView.addOverlay(route.polyline)
-            })
+            print("Found my routing...")
+
+            if let firstRoute = resp?.routes.first {
+                self.mapView.addOverlay(firstRoute.polyline)
+
+            }
+            self.currentShowingRoute = resp?.routes.first
+            
         }
     }
+    
+    var currentShowingRoute: MKRoute?
     //renderer for the overlay on the map
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-        polylineRenderer.strokeColor = #colorLiteral(red: 0.3672358394, green: 0.6400595307, blue: 0.9723293185, alpha: 1)
+        polylineRenderer.strokeColor = #colorLiteral(red: 0.9723293185, green: 0.09092439329, blue: 0.1431778478, alpha: 1)
         polylineRenderer.lineWidth = 3
         return polylineRenderer
     }
