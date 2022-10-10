@@ -10,8 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
 //     MainView.ContainerView().edgesIgnoringSafeArea(.all)
-     DirectionPreview.ContainerView().edgesIgnoringSafeArea(.all)
-//        LocationSearch_Previews.ContainerView()
+//     DirectionPreview.ContainerView().edgesIgnoringSafeArea(.all)
+//      LocationSearch_Previews.ContainerView()
+        PlacesController_Previews.Container().edgesIgnoringSafeArea(.all)
         
     }
 }
