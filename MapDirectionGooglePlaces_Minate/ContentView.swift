@@ -12,8 +12,9 @@ struct ContentView: View {
 //     MainView.ContainerView().edgesIgnoringSafeArea(.all)
 //     DirectionPreview.ContainerView().edgesIgnoringSafeArea(.all)
 //      LocationSearch_Previews.ContainerView()
-        PlacesController_Previews.Container().edgesIgnoringSafeArea(.all)
-        
+//        PlacesController_Previews.Container().edgesIgnoringSafeArea(.all)
+//
+        MapViewContainer().edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -10,6 +10,7 @@
 		006367EF28EE4953000B668B /* RouteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006367EE28EE4953000B668B /* RouteHeader.swift */; };
 		006367F228EF69C2000B668B /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006367F128EF69C2000B668B /* PlacesController.swift */; };
 		006BF92728F36BCE00653869 /* CustomCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006BF92628F36BCE00653869 /* CustomCallout.swift */; };
+		006BF92A28F4916B00653869 /* MapSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006BF92928F4916B00653869 /* MapSearchingView.swift */; };
 		0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E33A28EBBACC00066598 /* LocationSearchController.swift */; };
 		008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CC28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift */; };
 		008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A35CE28DE53EA00C0919B /* ContentView.swift */; };
@@ -27,6 +28,7 @@
 		006367EE28EE4953000B668B /* RouteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHeader.swift; sourceTree = "<group>"; };
 		006367F128EF69C2000B668B /* PlacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
 		006BF92628F36BCE00653869 /* CustomCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCallout.swift; sourceTree = "<group>"; };
+		006BF92928F4916B00653869 /* MapSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingView.swift; sourceTree = "<group>"; };
 		0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MapDirectionGooglePlaces-Minate-Info.plist"; sourceTree = SOURCE_ROOT; };
 		0086E33A28EBBACC00066598 /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
 		008A35C928DE53EA00C0919B /* MapDirectionGooglePlaces_Minate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapDirectionGooglePlaces_Minate.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +67,14 @@
 			path = Places;
 			sourceTree = "<group>";
 		};
+		006BF92828F4914E00653869 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				006BF92928F4916B00653869 /* MapSearchingView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		0073049928E68EFC00CCAF0F /* Directions */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +106,7 @@
 		008A35CB28DE53EA00C0919B /* MapDirectionGooglePlaces_Minate */ = {
 			isa = PBXGroup;
 			children = (
+				006BF92828F4914E00653869 /* SwiftUI */,
 				006367F028EF699C000B668B /* Places */,
 				0073049928E68EFC00CCAF0F /* Directions */,
 				0073049828E5645C00CCAF0F /* MapDirectionGooglePlaces-Minate-Info.plist */,
@@ -264,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				006BF92A28F4916B00653869 /* MapSearchingView.swift in Sources */,
 				006367EF28EE4953000B668B /* RouteHeader.swift in Sources */,
 				00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */,
 				00E5278728E68F4E0018675A /* DirectionController.swift in Sources */,
