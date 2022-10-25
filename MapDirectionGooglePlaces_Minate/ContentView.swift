@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     var body: some View {
@@ -14,7 +15,9 @@ struct ContentView: View {
 //      LocationSearch_Previews.ContainerView()
 //        PlacesController_Previews.Container().edgesIgnoringSafeArea(.all)
 //
-        MapViewContainer().edgesIgnoringSafeArea(.all)
+//        MapViewContainer().edgesIgnoringSafeArea(.all)
+//        DirectionSearchView().environmentObject(DirectionEnvironment()).edgesIgnoringSafeArea(.all)
+        SlideMenuMapView(mapType: .standard).edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -21,7 +21,9 @@
 		00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B8933328E4F80900FAAA1C /* LocationCarouselController.swift */; };
 		00DF0BD828DF9A040003C805 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0BD728DF9A040003C805 /* MainController.swift */; };
 		00E5278728E68F4E0018675A /* DirectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E5278628E68F4E0018675A /* DirectionController.swift */; };
-		2E3AE2AD010720AF55563CC2 /* libPods-MapDirectionGooglePlaces_Minate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6EF20764EC08368222071E4 /* libPods-MapDirectionGooglePlaces_Minate.a */; };
+		176992672903A44F00AF7C20 /* SlideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176992662903A44F00AF7C20 /* SlideMenuView.swift */; };
+		17BAA02E2900801F00CAB56C /* DirectionSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BAA02D2900801F00CAB56C /* DirectionSearchView.swift */; };
+		ECF56B25F0A5D0564C63650B /* Pods_MapDirectionGooglePlaces_Minate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF5581BBD3D9C02926A118A /* Pods_MapDirectionGooglePlaces_Minate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +42,10 @@
 		00DF0BD728DF9A040003C805 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		00E5278628E68F4E0018675A /* DirectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionController.swift; sourceTree = "<group>"; };
 		1373492972A01F33D39760EC /* Pods-MapDirectionGooglePlaces_Minate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapDirectionGooglePlaces_Minate.release.xcconfig"; path = "Target Support Files/Pods-MapDirectionGooglePlaces_Minate/Pods-MapDirectionGooglePlaces_Minate.release.xcconfig"; sourceTree = "<group>"; };
+		176992662903A44F00AF7C20 /* SlideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuView.swift; sourceTree = "<group>"; };
+		17BAA02D2900801F00CAB56C /* DirectionSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionSearchView.swift; sourceTree = "<group>"; };
+		2DF5581BBD3D9C02926A118A /* Pods_MapDirectionGooglePlaces_Minate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapDirectionGooglePlaces_Minate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B759382AFBECCF5A45F1E15 /* Pods-MapDirectionGooglePlaces_Minate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapDirectionGooglePlaces_Minate.debug.xcconfig"; path = "Target Support Files/Pods-MapDirectionGooglePlaces_Minate/Pods-MapDirectionGooglePlaces_Minate.debug.xcconfig"; sourceTree = "<group>"; };
-		C6EF20764EC08368222071E4 /* libPods-MapDirectionGooglePlaces_Minate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MapDirectionGooglePlaces_Minate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +55,7 @@
 			files = (
 				0091D64428ED23080088F59F /* JGProgressHUD in Frameworks */,
 				0091D64128ECF5400088F59F /* LBTATools in Frameworks */,
-				2E3AE2AD010720AF55563CC2 /* libPods-MapDirectionGooglePlaces_Minate.a in Frameworks */,
+				ECF56B25F0A5D0564C63650B /* Pods_MapDirectionGooglePlaces_Minate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				006BF92928F4916B00653869 /* MapSearchingView.swift */,
+				17BAA02D2900801F00CAB56C /* DirectionSearchView.swift */,
+				176992662903A44F00AF7C20 /* SlideMenuView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -139,7 +145,7 @@
 		608E7D94F3CB5DB4E2DFFDFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C6EF20764EC08368222071E4 /* libPods-MapDirectionGooglePlaces_Minate.a */,
+				2DF5581BBD3D9C02926A118A /* Pods_MapDirectionGooglePlaces_Minate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -278,6 +284,7 @@
 				006BF92A28F4916B00653869 /* MapSearchingView.swift in Sources */,
 				006367EF28EE4953000B668B /* RouteHeader.swift in Sources */,
 				00B8933428E4F80900FAAA1C /* LocationCarouselController.swift in Sources */,
+				17BAA02E2900801F00CAB56C /* DirectionSearchView.swift in Sources */,
 				00E5278728E68F4E0018675A /* DirectionController.swift in Sources */,
 				0086E33B28EBBACD00066598 /* LocationSearchController.swift in Sources */,
 				008A35CF28DE53EA00C0919B /* ContentView.swift in Sources */,
@@ -285,6 +292,7 @@
 				00DF0BD828DF9A040003C805 /* MainController.swift in Sources */,
 				006BF92728F36BCE00653869 /* CustomCallout.swift in Sources */,
 				008A35CD28DE53EA00C0919B /* MapDirectionGooglePlaces_MinateApp.swift in Sources */,
+				176992672903A44F00AF7C20 /* SlideMenuView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -395,7 +403,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -418,7 +426,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MapDirectionGooglePlaces-Minate-Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,7 +458,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MapDirectionGooglePlaces-Minate-Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need your location!!!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

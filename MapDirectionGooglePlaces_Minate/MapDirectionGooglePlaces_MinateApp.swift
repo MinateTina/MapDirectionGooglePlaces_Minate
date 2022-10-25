@@ -21,7 +21,7 @@ struct MapDirectionGooglePlaces_MinateApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        GMSPlacesClient.provideAPIKey("AIzaSyA1WEFPZn5Rm0fxZoITzIx36Fku7_D0oKw")
+        GMSPlacesClient.provideAPIKey("")
         return true
     }
 }

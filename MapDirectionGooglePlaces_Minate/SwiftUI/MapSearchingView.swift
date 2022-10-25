@@ -50,7 +50,13 @@ class MapSearchingViewModel: NSObject, ObservableObject, CLLocationManagerDelega
         
         listenToKeyboardNotifications()
         
+        NotificationCenter.default.addObserver(forName: MapViewContainer.Coordinator.regionChangeNotification, object: nil, queue: .main) { notification in
+            self.region = notification.object as? MKCoordinateRegion
+        }
+        
     }
+    
+    private var region: MKCoordinateRegion?
     
     private func listenToKeyboardNotifications() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] (notification) in
@@ -76,6 +82,11 @@ class MapSearchingViewModel: NSObject, ObservableObject, CLLocationManagerDelega
         self.isSearching = true
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
+        
+        if let region = self.region {
+            request.region = region
+        }
+        
         let localSearch = MKLocalSearch(request: request)
         localSearch.start { resp, err in
             
@@ -112,7 +123,10 @@ struct MapSearchingView: View {
             
             VStack {
                 HStack {
-                    TextField("Search Terms", text: $vm.searchTerms)
+                    TextField("Search Terms", text: $vm.searchTerms, onCommit: {
+                        //filter out blue dot(your own location) while dragging around the map
+                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+                    })
                         .padding()
                         .background(Color.white)
                         
@@ -155,6 +169,7 @@ struct MapSearchingView: View {
     }
 }
 
+
 struct MapViewContainer: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         
@@ -169,10 +184,18 @@ struct MapViewContainer: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            //make sure blue dot returns
+            if !(annotation is MKPointAnnotation) { return nil }
             let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
             pinAnnotationView.canShowCallout = true
             return pinAnnotationView
         }
+        
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            NotificationCenter.default.post(name: MapViewContainer.Coordinator.regionChangeNotification, object: mapView.region)
+        }
+        
+        static let regionChangeNotification = Notification.Name("regionChangeNotification")
     }
     
     var annotations = [MKPointAnnotation]()
@@ -181,30 +204,53 @@ struct MapViewContainer: UIViewRepresentable {
     var currentLocation = CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437)
 
     func makeUIView(context: UIViewRepresentableContext<MapViewContainer>) -> MKMapView {
-        
         setupRegionForMap()
+        mapView.showsUserLocation = true
         return mapView
     }
     
     private func setupRegionForMap() {
         let centerCoordinate = CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
-        
         mapView.setRegion(region, animated: true)
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapViewContainer>) {
-        uiView.removeAnnotations(uiView.annotations)
-        uiView.addAnnotations(annotations)
-        uiView.showAnnotations(uiView.annotations, animated: false)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: currentLocation, span: span)
+        
+        uiView.setRegion(region, animated: true)
+        
+        if annotations.count == 0 {
+            uiView.removeAnnotations(uiView.annotations)
+            return
+        }
+        
+        if shouldRefreshAnnotations(mapView: uiView) {
+            uiView.removeAnnotations(uiView.annotations)
+            uiView.addAnnotations(annotations)
+            uiView.showAnnotations(uiView.annotations, animated: false)
+        }
+
         uiView.annotations.forEach { annotation in
             if annotation.title == selectedMapItem?.name {
                 uiView.selectAnnotation(annotation, animated: true)
             }
         }
         
+    }
+    
+    // This checks to see whether or not annotations have changed.  The algorithm generates a hashmap/dictionary for all the annotations and then goes through the map to check if they exist. If it doesn't currently exist, we treat this as a need to refresh the map
+    fileprivate func shouldRefreshAnnotations(mapView: MKMapView) -> Bool {
+        let grouped = Dictionary(grouping: mapView.annotations, by: { $0.title ?? ""})
+        for (_, annotation) in annotations.enumerated() {
+            if grouped[annotation.title ?? ""] == nil {
+                return true
+            }
+        }
+        return false
     }
 }
 
