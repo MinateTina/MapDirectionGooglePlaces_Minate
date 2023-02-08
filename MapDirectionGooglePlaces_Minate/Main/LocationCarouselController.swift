@@ -2,7 +2,7 @@
 //  LocationCarouselController.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 9/28/22.
+//  Created by Tina Tung on 9/28/22.
 //
 
 import LBTATools

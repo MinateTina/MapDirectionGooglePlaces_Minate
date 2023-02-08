@@ -2,7 +2,7 @@
 //  DirectionController.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 9/29/22.
+//  Created by Tina Tung on 9/29/22.
 //
 
 import UIKit

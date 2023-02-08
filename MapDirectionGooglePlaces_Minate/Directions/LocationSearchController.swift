@@ -2,7 +2,7 @@
 //  LocationSearchController.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 10/3/22.
+//  Created by Tina Tung on 10/3/22.
 //
 
 import SwiftUI

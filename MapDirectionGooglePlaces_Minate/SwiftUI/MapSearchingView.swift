@@ -2,7 +2,7 @@
 //  MapSearchingView.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 10/10/22.
+//  Created by Tina Tung on 10/10/22.
 //
 
 import SwiftUI
@@ -50,20 +50,25 @@ class MapSearchingViewModel: NSObject, ObservableObject, CLLocationManagerDelega
         
         listenToKeyboardNotifications()
         
-        NotificationCenter.default.addObserver(forName: MapViewContainer.Coordinator.regionChangeNotification, object: nil, queue: .main) { notification in
+        NotificationCenter.default.addObserver(forName: MapViewContainer.Coordinator.regionChangedNotification, object: nil, queue: .main) { notification in
             self.region = notification.object as? MKCoordinateRegion
         }
         
     }
     
-    private var region: MKCoordinateRegion?
+    fileprivate var region: MKCoordinateRegion?
     
-    private func listenToKeyboardNotifications() {
+    fileprivate func listenToKeyboardNotifications() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] (notification) in
             guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
             let keyboardFrame = value.cgRectValue
-            let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
-            
+
+//            let window = UIApplication.shared.windows.filter{$0.isKeyWindow}.first
+           // iOS 16.0
+            let window = UIApplication.shared.connectedScenes
+                .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+                .first { $0.isKeyWindow }
+           
             withAnimation(.easeOut(duration: 0.25)) {
                 self?.keyboardHeight = keyboardFrame.height - window!.safeAreaInsets.bottom
             }
@@ -79,7 +84,7 @@ class MapSearchingViewModel: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func performSearch(query: String) {
-        self.isSearching = true
+        
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         
@@ -90,6 +95,7 @@ class MapSearchingViewModel: NSObject, ObservableObject, CLLocationManagerDelega
         let localSearch = MKLocalSearch(request: request)
         localSearch.start { resp, err in
             
+            self.isSearching = true
             var airportAnnotations = [MKPointAnnotation]()
             if let err =  err {
                 print("Failed to fetch local search", err)
@@ -120,22 +126,24 @@ struct MapSearchingView: View {
             
             MapViewContainer(annotations: vm.annotations, selectedMapItem: vm.selectedMapItem, currentLocation: vm.currentLocation)
                 .edgesIgnoringSafeArea(.all)
-            
-            VStack {
+
+            VStack(spacing: 12) {
                 HStack {
                     TextField("Search Terms", text: $vm.searchTerms, onCommit: {
                         //filter out blue dot(your own location) while dragging around the map
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
-                    })
-                        .padding()
-                        .background(Color.white)
-                        
 
+//                        UIApplication.shared.windows.filter{$0.isKeyWindow}.first?.endEditing(true)
+                        UIApplication.shared.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }.first?.endEditing(true)
+                    })
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                        .background(Color.white)
                 }.padding()
                 
                 if vm.isSearching {
                     Text("Searching...")
                 }
+                
                 Spacer()
                 
                 ScrollView(.horizontal) {
@@ -192,10 +200,10 @@ struct MapViewContainer: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-            NotificationCenter.default.post(name: MapViewContainer.Coordinator.regionChangeNotification, object: mapView.region)
+            NotificationCenter.default.post(name: MapViewContainer.Coordinator.regionChangedNotification, object: mapView.region)
         }
         
-        static let regionChangeNotification = Notification.Name("regionChangeNotification")
+        static let regionChangedNotification = Notification.Name("regionChangeNotification")
     }
     
     var annotations = [MKPointAnnotation]()
@@ -209,7 +217,7 @@ struct MapViewContainer: UIViewRepresentable {
         return mapView
     }
     
-    private func setupRegionForMap() {
+    fileprivate func setupRegionForMap() {
         let centerCoordinate = CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
@@ -218,12 +226,12 @@ struct MapViewContainer: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapViewContainer>) {
         
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: currentLocation, span: span)
-        
-        uiView.setRegion(region, animated: true)
-        
         if annotations.count == 0 {
+            //setting up the map to current location
+            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            let region = MKCoordinateRegion(center: currentLocation, span: span)
+            mapView.setRegion(region, animated: true)
+            
             uiView.removeAnnotations(uiView.annotations)
             return
         }
@@ -231,7 +239,7 @@ struct MapViewContainer: UIViewRepresentable {
         if shouldRefreshAnnotations(mapView: uiView) {
             uiView.removeAnnotations(uiView.annotations)
             uiView.addAnnotations(annotations)
-            uiView.showAnnotations(uiView.annotations, animated: false)
+            uiView.showAnnotations(uiView.annotations.filter{$0 is MKPointAnnotation}, animated: false)
         }
 
         uiView.annotations.forEach { annotation in

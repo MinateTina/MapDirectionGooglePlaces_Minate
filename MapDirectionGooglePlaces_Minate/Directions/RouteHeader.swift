@@ -2,7 +2,7 @@
 //  RouteHeader.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 10/5/22.
+//  Created by Tina Tung on 10/5/22.
 //
 
 import SwiftUI

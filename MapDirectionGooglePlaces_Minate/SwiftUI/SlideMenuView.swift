@@ -2,7 +2,7 @@
 //  SlideMenuView.swift
 //  MapDirectionGooglePlaces_Minate
 //
-//  Created by Minate on 10/21/22.
+//  Created by Tina Tung on 10/21/22.
 //
 
 import SwiftUI
@@ -46,7 +46,7 @@ struct SlideMenuView: View {
                 Spacer()
             }.padding()
             
-          
+            
             
             HStack {
                 ZStack {
@@ -87,7 +87,6 @@ struct SlideMenuView: View {
             }.offset(x: self.isMenuShowing ? 0 : -200)
                 .animation(.spring())
         }
-       
     }
 }
 
@@ -106,8 +105,6 @@ struct SlideMenuMapView: UIViewRepresentable {
 
 struct SlideMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        SlideMenuView().colorScheme(.dark)
         SlideMenuView().colorScheme(.light)
-        
     }
 }
